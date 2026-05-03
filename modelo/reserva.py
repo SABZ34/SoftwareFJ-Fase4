@@ -1,8 +1,8 @@
 """
-Clase Reserva con manejo completo de errores.
+Clase Reserva que gestiona el proceso de reservas.
 """
 
-from excepciones.errores import ReservaError, ServicioNoDisponibleError
+from excepciones.errores import ReservaError
 from util.logger import registrar_log
 
 
@@ -15,28 +15,16 @@ class Reserva:
     def confirmar(self):
         try:
             if not self.servicio:
-                raise ServicioNoDisponibleError("Servicio no disponible")
+                raise ReservaError("Servicio inválido")
 
-            costo = self.servicio.calcular_costo(0.19, 0.05)  # con impuesto y descuento
+            costo = self.servicio.calcular_costo()
             self.estado = "Confirmada"
 
         except Exception as e:
-            registrar_log(f"Error en confirmación: {e}")
-            raise ReservaError("Fallo en reserva") from e
-
-        else:
-            return costo
+            registrar_log(str(e))
+            raise
 
         finally:
-            registrar_log("Intento de confirmación ejecutado")
+            registrar_log("Intento de reserva ejecutado")
 
-    def cancelar(self):
-        try:
-            if self.estado != "Confirmada":
-                raise ReservaError("No se puede cancelar")
-
-            self.estado = "Cancelada"
-
-        except Exception as e:
-            registrar_log(f"Error al cancelar: {e}")
-            raise
+        return costo

@@ -1,10 +1,14 @@
 """
-Clase abstracta base del sistema.
-Representa cualquier entidad con ID.
+Clase abstracta base para todas las entidades.
 """
 
 from abc import ABC
 
+
 class Entidad(ABC):
+    """
+    Clase abstracta que contiene atributos comunes.
+    """
+
     def __init__(self, id):
-        self.id = id
+        self._id = id  # Encapsulación (protegido)

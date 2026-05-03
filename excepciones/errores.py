@@ -1,18 +1,15 @@
 """
-Excepciones personalizadas del sistema
+Excepciones personalizadas del sistema.
 """
 
-class ErrorSistema(Exception):
+
+class ClienteInvalidoError(Exception):
     pass
 
 
-class ClienteInvalidoError(ErrorSistema):
+class ServicioNoDisponibleError(Exception):
     pass
 
 
-class ServicioNoDisponibleError(ErrorSistema):
-    pass
-
-
-class ReservaError(ErrorSistema):
+class ReservaError(Exception):
     pass
